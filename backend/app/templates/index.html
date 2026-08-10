@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeCollab AI - Code at the Speed of Thought</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <style>
+        body {
+            background-color: #0b1329;
+            color: #ffffff;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        .gradient-banner {
+            background: linear-gradient(135deg, #3a86ff 0%, #00b4d8 50%, #00f5d4 100%);
+        }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+        }
+        /* Marquee Custom Animation */
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            display: flex;
+            width: max-content;
+            animation: marquee 25s linear infinite;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <header class="border-b border-gray-800 bg-[#0b1329]/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-2 text-xl font-bold tracking-tight">
+                <i class="fa-solid fa-laptop-code text-blue-400"></i>
+                <span>CodeCollab AI</span>
+            </div>
+            
+            <nav class="hidden md:flex items-center space-x-8 text-sm text-gray-400 font-medium">
+                <a href="#" class="text-white border-b-2 border-blue-500 pb-1">Features</a>
+                <a href="#" class="hover:text-white transition">Live Demo</a>
+                <a href="#" class="hover:text-white transition">Stack</a>
+                <a href="#" class="hover:text-white transition">Pricing</a>
+                <a href="#" class="hover:text-white transition">Docs</a>
+            </nav>
+
+            <div class="flex items-center space-x-4 text-sm font-medium">
+                <a href="http://127.0.0.1:8000/login" class="text-gray-400 hover:text-white transition">Sign In</a>
+                <a href="http://127.0.0.1:8000/auth/login" class="bg-blue-400 hover:bg-blue-500 text-slate-900 px-4 py-2 rounded-md font-semibold transition">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="relative min-h-[75vh] flex flex-col justify-center px-6 max-w-7xl mx-auto pt-20 pb-12">
+        <div class="max-w-3xl" data-aos="fade-up" data-aos-duration="1000">
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tight leading-none mb-6">
+                Code at the <br>
+                <span class="text-sky-400 text-glow">Speed of Thought</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-400 font-normal leading-relaxed mb-8 max-w-2xl">
+                Experience the world's most advanced real-time collaborative IDE, powered by autonomous AI agents that help you architect, debug, and deploy.
+            </p>
+            
+            <div class="flex flex-wrap gap-4 mb-12">
+                <a href="#" class="bg-blue-400 hover:bg-blue-500 text-slate-900 px-6 py-3.5 rounded-lg font-semibold flex items-center space-x-2 transition">
+                    <span>Start Coding Now</span>
+                    <i class="fa-solid fa-arrow-right text-sm"></i>
+                </a>
+                <a href="#" class="border border-gray-700 hover:border-gray-500 bg-slate-900/40 text-white px-6 py-3.5 rounded-lg font-semibold transition">
+                    Watch Demo
+                </a>
+            </div>
+
+            <div class="flex items-center space-x-3 mt-4">
+                <div class="flex -space-x-2">
+                    <img class="w-8 h-8 rounded-full border-2 border-[#0b1329] object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Dev 1">
+                    <img class="w-8 h-8 rounded-full border-2 border-[#0b1329] object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="Dev 2">
+                    <img class="w-8 h-8 rounded-full border-2 border-[#0b1329] object-cover" src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=100&q=80" alt="Dev 3">
+                </div>
+                <span class="text-xs font-mono tracking-widest text-gray-400 uppercase">+ 50K DEVS JOINED THIS WEEK</span>
+            </div>
+        </div>
+
+        <div class="absolute bottom-0 right-0 w-80 opacity-40 pointer-events-none">
+            <svg viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 90 L50 60 L90 80 L140 40 L190 70 M50 60 L140 40 M90 80 L190 70" stroke="#38bdf8" stroke-width="0.5" stroke-dasharray="2 2"/>
+                <circle cx="10" cy="90" r="1.5" fill="#38bdf8"/>
+                <circle cx="50" cy="60" r="1.5" fill="#38bdf8"/>
+                <circle cx="90" cy="80" r="1.5" fill="#38bdf8"/>
+                <circle cx="140" cy="40" r="1.5" fill="#38bdf8"/>
+                <circle cx="190" cy="70" r="1.5" fill="#38bdf8"/>
+            </svg>
+        </div>
+    </section>
+
+    <section class="py-24 px-6 max-w-7xl mx-auto border-t border-gray-900 relative">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-96 opacity-30 pointer-events-none">
+            <svg viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 40 L40 10 L90 30 L130 10 L190 40 M40 10 L130 10" stroke="#38bdf8" stroke-width="0.5"/>
+                <circle cx="40" cy="10" r="1" fill="#38bdf8"/>
+                <circle cx="90" cy="30" r="1" fill="#38bdf8"/>
+                <circle cx="130" cy="10" r="1" fill="#38bdf8"/>
+            </svg>
+        </div>
+
+        <div class="text-center mb-16" data-aos="fade-up">
+            <span class="text-xs font-mono tracking-widest text-blue-400 uppercase block mb-3">Platform Core</span>
+            <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">Engineered for Precision</h2>
+            <p class="text-gray-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
+                Our stack is built from the ground up to ensure zero latency and maximum developer productivity across distributed teams.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-slate-900/40 border border-gray-800 p-8 rounded-xl hover:border-gray-700 transition duration-300" data-aos="fade-up" data-aos-delay="100">
+                <div class="w-10 h-10 rounded-lg bg-gray-800/60 flex items-center justify-center text-blue-400 mb-6">
+                    <i class="fa-solid fa-rotate"></i>
+                </div>
+                <h3 class="text-lg font-bold mb-3">Real-time Sync</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    CRDT-based synchronization ensures every keystroke is reflected instantly across the globe with zero conflicts.
+                </p>
+            </div>
+
+            <div class="bg-slate-900/40 border border-gray-800 p-8 rounded-xl hover:border-gray-700 transition duration-300" data-aos="fade-up" data-aos-delay="200">
+                <div class="w-10 h-10 rounded-lg bg-gray-800/60 flex items-center justify-center text-cyan-400 mb-6">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <h3 class="text-lg font-bold mb-3">AI Pair Programming</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Integrated LLMs understand your entire codebase context, providing accurate completions and architectural suggestions.
+                </p>
+            </div>
+
+            <div class="bg-slate-900/40 border border-gray-800 p-8 rounded-xl hover:border-gray-700 transition duration-300" data-aos="fade-up" data-aos-delay="300">
+                <div class="w-10 h-10 rounded-lg bg-gray-800/60 flex items-center justify-center text-amber-500 mb-6">
+                    <i class="fa-solid fa-globe"></i>
+                </div>
+                <h3 class="text-lg font-bold mb-3">Multi-language Support</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Native LSP support for 50+ languages including Rust, Go, Python, and TypeScript with full type-checking.
+                </p>
+            </div>
+
+            <div class="bg-slate-900/40 border border-gray-800 p-8 rounded-xl hover:border-gray-700 transition duration-300" data-aos="fade-up" data-aos-delay="400">
+                <div class="w-10 h-10 rounded-lg bg-gray-800/60 flex items-center justify-center text-sky-400 mb-6">
+                    <i class="fa-solid fa-cloud"></i>
+                </div>
+                <h3 class="text-lg font-bold mb-3">Cloud Sandboxes</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Spin up a full-stack environment in seconds. Every branch gets its own isolated, persistent container.
+                </p>
+            </div>
+
+            <div class="bg-slate-900/40 border border-gray-800 p-8 rounded-xl hover:border-gray-700 transition duration-300" data-aos="fade-up" data-aos-delay="500">
+                <div class="w-10 h-10 rounded-lg bg-gray-800/60 flex items-center justify-center text-emerald-400 mb-6">
+                    <i class="fa-solid fa-diagram-project"></i>
+                </div>
+                <h3 class="text-lg font-bold mb-3">Version Control</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Visual Git integration that makes branching, merging, and rebasing as simple as a drag-and-drop.
+                </p>
+            </div>
+
+            <div class="bg-slate-900/40 border border-gray-800 p-8 rounded-xl hover:border-gray-700 transition duration-300" data-aos="fade-up" data-aos-delay="600">
+                <div class="w-10 h-10 rounded-lg bg-gray-800/60 flex items-center justify-center text-orange-400 mb-6">
+                    <i class="fa-solid fa-comments"></i>
+                </div>
+                <h3 class="text-lg font-bold mb-3">Team Chat</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Discuss logic directly within the lines of code. Threaded conversations pinned to specific file symbols.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 border-t border-b border-gray-900 bg-slate-950/30 overflow-hidden">
+        <div class="text-center mb-6">
+            <span class="text-xs font-mono tracking-widest text-gray-500 uppercase">Seamless Integration with Your Favorite Stack</span>
+        </div>
+        <div class="relative w-full flex items-center">
+            <div class="animate-marquee flex whitespace-nowrap space-x-16 text-2xl md:text-3xl font-bold text-gray-700">
+                <span>TypeScript</span>
+                <span>Tailwind</span>
+                <span>React</span>
+                <span>Node.js</span>
+                <span>Python</span>
+                <span>Rust</span>
+                <span>Go</span>
+                <span>TypeScript</span>
+                <span>Tailwind</span>
+                <span>React</span>
+                <span>Node.js</span>
+                <span>Python</span>
+                <span>Rust</span>
+                <span>Go</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-6 max-w-7xl mx-auto text-center">
+        <div class="mb-12" data-aos="fade-up">
+            <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-3">A Truly Collaborative Terminal</h2>
+            <p class="text-gray-400 text-sm md:text-base">Watch your team work in tandem. Low-latency streaming of code changes.</p>
+        </div>
+
+        <div class="max-w-4xl mx-auto rounded-xl border border-gray-800 bg-[#050b14] shadow-2xl overflow-hidden text-left" data-aos="zoom-in" data-aos-duration="800">
+            <div class="bg-gray-950/80 px-4 py-3 border-b border-gray-900 flex items-center justify-between">
+                <div class="flex space-x-2">
+                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                </div>
+                <div class="text-xs font-mono text-gray-500">main.rs — project-omega</div>
+                <div class="flex space-x-1">
+                    <div class="w-5 h-5 rounded-full bg-sky-600 text-[9px] flex items-center justify-center font-bold">JD</div>
+                    <div class="w-5 h-5 rounded-full bg-emerald-600 text-[9px] flex items-center justify-center font-bold">AM</div>
+                    <div class="w-5 h-5 rounded-full bg-purple-600 text-[9px] flex items-center justify-center font-bold">AI</div>
+                </div>
+            </div>
+            
+            <div class="p-6 font-mono text-xs md:text-sm leading-relaxed text-gray-300 overflow-x-auto min-h-[320px]">
+                <div><span class="text-purple-400">use</span> std::sync::Arc;</div>
+                <div><span class="text-purple-400">use</span> tokio::sync::Mutex;</div>
+                <br>
+                <div><span class="text-amber-500">#[tokio::main]</span></div>
+                <div><span class="text-purple-400">async fn</span> <span class="text-sky-400">main</span>() -&gt; <span class="text-yellow-400">Result</span>&lt;(), <span class="text-yellow-400">Box</span>&lt;<span class="text-purple-400">dyn</span> <span class="text-yellow-400">Error</span>&gt;&gt; {</div>
+                
+                <div class="pl-4 text-gray-500">// Initialize secure state</div>
+                <div class="pl-4">
+                    <span class="text-purple-400">let</span> state = Arc::new(Mutex::new(CodeCollabState::new()));
+                    <span class="inline-block w-[1.5px] h-4 bg-purple-400 align-middle animate-pulse"></span>
+                    <span class="bg-purple-500/20 text-purple-300 text-[10px] px-1 py-0.5 rounded ml-1 font-sans">Sarah J.</span>
+                </div>
+                <br>
+                
+                <div class="pl-4 text-gray-500">// Start collaborative session</div>
+                <div class="pl-4">
+                    <span class="text-emerald-400">run_distributed_engine</span>(state).<span class="text-purple-400">await</span>?;
+                    <span class="inline-block w-[1.5px] h-4 bg-emerald-400 align-middle animate-pulse"></span>
+                    <span class="bg-emerald-500/20 text-emerald-300 text-[10px] px-1 py-0.5 rounded ml-1 font-sans">Alex Chen</span>
+                </div>
+                <br>
+                <div class="pl-4"><span class="text-emerald-400">Ok</span>(())</div>
+                <div>}</div>
+                <br>
+                <div><span class="text-purple-400">fn</span> <span class="text-sky-400">optimize_flow</span>() {</div>
+                <div class="pl-4 text-gray-500">// AI Suggestion: Implement caching here</div>
+                <div class="pl-4 text-gray-500">// for improved performance</div>
+                <div>}</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 px-6 max-w-7xl mx-auto" data-aos="fade-up">
+        <div class="gradient-banner rounded-3xl p-12 md:p-20 text-center text-slate-900 shadow-xl relative overflow-hidden">
+            <div class="relative z-10 max-w-2xl mx-auto">
+                <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Ready to collaborate?</h2>
+                <p class="text-slate-800 font-medium text-base md:text-lg mb-8 opacity-90">
+                    Join over 1 million developers who are already building the future on CodeCollab AI.
+                </p>
+                <a href="#" class="inline-block bg-[#0b1329] hover:bg-slate-800 text-white font-bold px-8 py-4 rounded-xl transition shadow-md">
+                    Start Coding Now
+                </a>
+            </div>
+            
+            <div class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-white/10 pointer-events-none"></div>
+            <div class="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-white/10 pointer-events-none"></div>
+        </div>
+    </section>
+
+    <footer class="border-t border-gray-900 bg-slate-950/40 text-sm text-gray-400 mt-12 py-16 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+            
+            <div class="space-y-4">
+                <div class="flex items-center space-x-2 text-white font-bold text-lg">
+                    <i class="fa-solid fa-laptop-code text-blue-400"></i>
+                    <span>CodeCollab AI</span>
+                </div>
+                <p class="text-xs leading-relaxed max-w-xs text-gray-500">
+                    Engineered for the next generation of developers. Building tools that empower creativity and speed.
+                </p>
+                <div class="flex items-center space-x-3 pt-2">
+                    <a href="#" class="w-8 h-8 rounded-full border border-gray-800 flex items-center justify-center hover:text-white hover:border-gray-600 transition">
+                        <i class="fa-solid fa-share-nodes text-xs"></i>
+                    </a>
+                    <a href="#" class="w-8 h-8 rounded-full border border-gray-800 flex items-center justify-center hover:text-white hover:border-gray-600 transition">
+                        <i class="fa-solid fa-rss text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-white font-semibold mb-4 text-xs tracking-wider uppercase">Platform</h4>
+                <ul class="space-y-2.5 text-xs font-medium">
+                    <li><a href="#" class="hover:text-white transition">Documentation</a></li>
+                    <li><a href="#" class="hover:text-white transition">API Reference</a></li>
+                    <li><a href="#" class="hover:text-white transition">Changelog</a></li>
+                    <li><a href="#" class="hover:text-white transition">Status</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-semibold mb-4 text-xs tracking-wider uppercase">Company</h4>
+                <ul class="space-y-2.5 text-xs font-medium">
+                    <li><a href="#" class="hover:text-white transition">About Us</a></li>
+                    <li><a href="#" class="hover:text-white transition">Careers</a></li>
+                    <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-white transition">Terms of Service</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-semibold mb-4 text-xs tracking-wider uppercase">Newsletter</h4>
+                <p class="text-xs text-gray-500 mb-4 leading-relaxed">
+                    Get the latest feature updates and technical deep dives.
+                </p>
+                <form class="flex max-w-sm rounded-md overflow-hidden border border-gray-800 focus-within:border-gray-600 transition">
+                    <input type="email" placeholder="Email address" class="w-full bg-slate-900/40 px-3 py-2 text-xs text-white placeholder-gray-600 outline-none">
+                    <button type="submit" class="bg-blue-400 hover:bg-blue-500 text-slate-900 px-4 py-2 font-semibold text-xs transition">Join</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto border-t border-gray-900/60 pt-6 flex flex-col md:flex-row items-center justify-between text-xs text-gray-600 font-mono">
+            <div>&copy; 2024 CodeCollab AI. Engineered for the next generation of developers.</div>
+            <div class="flex items-center space-x-4 mt-2 md:mt-0">
+                <span>v1.2.0-stable</span>
+                <span>Security Verified</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,
+            duration: 700
+        });
+    </script>
+</body>
+</html>

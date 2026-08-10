@@ -1,0 +1,71 @@
+.ai-card{
+
+    background:#182233;
+
+    border:1px solid #2f4057;
+
+    border-radius:12px;
+
+    padding:14px;
+
+    box-shadow:0 4px 14px rgba(0,0,0,.25);
+
+}
+
+.ai-card h3{
+
+    margin-bottom:10px;
+
+    color:#60a5fa;
+
+    font-size:15px;
+
+    font-weight:700;
+
+}
+
+.ai-card div{
+
+    color:#e2e8f0;
+
+    font-size:14px;
+
+    line-height:1.6;
+
+    white-space:pre-wrap;
+
+}
+
+#aiResponse{
+
+    scrollbar-width:thin;
+
+}
+
+#aiResponse::-webkit-scrollbar{
+
+    width:7px;
+
+}
+
+#aiResponse::-webkit-scrollbar-thumb{
+
+    background:#334155;
+
+    border-radius:20px;
+
+}
+
+#generateMom{
+
+    transition:.25s;
+
+}
+
+#generateMom:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 8px 20px rgba(99,102,241,.4);
+
+}

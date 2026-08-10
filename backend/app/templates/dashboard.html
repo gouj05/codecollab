@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | CodeCollab AI</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/rooms.css">
+
+<style>
+  :root{
+    --bg:#0a0d12; --surface:#10141b; --surface-2:#161b24; --surface-3:#1d2330;
+    --border:#242b38; --border-soft:#1a202b;
+    --text:#edf1f7; --text-muted:#8b93a3; --text-faint:#4c5566;
+
+    /* Signal & Pulse -- twin-cursor accent system */
+    --signal:#4fd8c4;
+    --signal-dim:#38b8a6;
+    --signal-soft:rgba(79,216,196,.12);
+    --pulse:#e8a262;
+    --pulse-dim:#cf8c4c;
+    --pulse-soft:rgba(232,162,98,.12);
+    --duo:linear-gradient(120deg, var(--signal) 0%, var(--pulse) 100%);
+    --duo-soft:linear-gradient(120deg, rgba(79,216,196,.10) 0%, rgba(232,162,98,.10) 100%);
+
+    --accent:var(--signal); --accent-soft:var(--signal-soft);
+    --amber:#e8b563; --amber-soft:rgba(232,181,99,.10);
+    --danger:#ef5f7a; --danger-soft:rgba(239,95,122,.10);
+    --violet:#7c8fee; --violet-soft:rgba(124,143,238,.12);
+    --font-display:'Sora',sans-serif; --font-body:'Manrope',sans-serif; --font-mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    position:relative;
+  }
+  .font-display{ font-family:var(--font-display); }
+  .font-mono{ font-family:var(--font-mono); }
+  .icon{ width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; display:block; }
+  .grad-text{
+    background:var(--duo); background-size:200% 200%;
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    animation:gradShift 9s ease infinite;
+  }
+  @keyframes gradShift{ 0%{ background-position:0% 50%; } 50%{ background-position:100% 50%; } 100%{ background-position:0% 50%; } }
+
+  /* ===== Technically-sound backdrop: circuit-board mesh + drifting glow + pulsing solder nodes ===== */
+  .bg-grid{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      linear-gradient(rgba(237,241,247,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(237,241,247,.035) 1px, transparent 1px);
+    background-size:52px 52px;
+    -webkit-mask-image:radial-gradient(ellipse 75% 50% at 50% 0%, #000 30%, transparent 100%);
+            mask-image:radial-gradient(ellipse 75% 50% at 50% 0%, #000 30%, transparent 100%);
+  }
+  .aurora-wash{
+    position:fixed; z-index:0; pointer-events:none; top:-260px; left:50%; transform:translateX(-50%);
+    width:960px; height:560px; filter:blur(130px); opacity:.16;
+    background:var(--duo); background-size:220% 220%;
+    animation:gradShift 18s ease infinite;
+  }
+  .circuit-node{
+    position:fixed; z-index:0; pointer-events:none; border-radius:999px;
+    width:4px; height:4px; background:var(--signal);
+    animation:nodePulse 4.5s ease-in-out infinite; opacity:.5;
+  }
+  .circuit-node.n2{ background:var(--pulse); animation-delay:1.5s; }
+  .circuit-node.n3{ animation-delay:2.7s; }
+  .circuit-node.n4{ background:var(--pulse); animation-delay:.8s; }
+  .circuit-node.n5{ animation-delay:3.4s; }
+  @keyframes nodePulse{
+    0%,100%{ transform:scale(1); box-shadow:0 0 0 0 rgba(79,216,196,.3); }
+    50%{ transform:scale(2.4); box-shadow:0 0 16px 3px rgba(79,216,196,.22); }
+  }
+  @media (max-width:767px){ .circuit-node{ display:none; } }
+
+  .page-shell{ position:relative; z-index:1; }
+
+  @keyframes fadeUp{ from{ opacity:0; transform:translateY(12px); } to{ opacity:1; transform:translateY(0); } }
+  .reveal{ opacity:0; animation:fadeUp .55s cubic-bezier(.22,.68,.36,1) forwards; }
+
+  nav.topnav{
+    background:rgba(16,20,27,.82);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+  }
+  .brand-mark{ display:inline-flex; align-items:center; gap:.55rem; }
+  .brand-mark .logomark{
+    width:32px; height:32px; border-radius:8px;
+    background:var(--surface-2);
+    display:flex; align-items:center; justify-content:center; color:var(--signal);
+    position:relative; transition:transform .3s ease;
+  }
+  .brand-mark .logomark::before{
+    content:""; position:absolute; inset:0; border-radius:8px; padding:1px;
+    background:var(--duo); background-size:200% 200%; animation:gradShift 6s ease infinite;
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor; mask-composite:exclude;
+  }
+  .brand-mark:hover .logomark{ transform:rotate(-8deg) scale(1.05); }
+
+  #profilePic{
+    border-color:var(--border); background:var(--surface-2);
+    transition:border-color .2s ease, transform .2s ease;
+  }
+  #profilePic:hover{ border-color:var(--signal); transform:scale(1.04); }
+  #userName{ font-family:var(--font-display); font-weight:600; letter-spacing:.01em; font-size:.92rem; }
+
+  #logoutBtn{
+    background:transparent;
+    color:var(--text-muted);
+    border:1px solid var(--border);
+    font-family:var(--font-body); font-weight:600; font-size:.83rem;
+    display:inline-flex; align-items:center; gap:.4rem;
+    transition:all .18s ease;
+  }
+  #logoutBtn svg{ transition:transform .18s ease; }
+  #logoutBtn:hover{ background:var(--danger-soft); color:var(--danger); border-color:var(--danger); }
+  #logoutBtn:hover svg{ transform:translateX(2px); }
+  #logoutBtn:focus-visible{ outline:2px solid var(--danger); outline-offset:2px; }
+
+  .panel{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px;
+  }
+
+  .hero-panel{
+    background:
+      radial-gradient(ellipse 60% 140% at 100% 0%, rgba(232,162,98,.07), transparent 60%),
+      radial-gradient(ellipse 50% 120% at 0% 100%, rgba(79,216,196,.08), transparent 60%),
+      var(--surface);
+    border:1px solid var(--border);
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-panel::after{
+    content:"";
+    position:absolute; top:-70%; right:-8%; width:340px; height:340px;
+    background:var(--duo-soft);
+    filter:blur(20px);
+    pointer-events:none;
+  }
+  #welcome{ font-family:var(--font-display); letter-spacing:-.01em; }
+
+  /* faint live "activity" trace across the hero, purely decorative */
+  .pulse-trace{
+    position:absolute; left:0; right:0; bottom:0; height:46px; opacity:.5; pointer-events:none;
+  }
+  .pulse-trace path{
+    fill:none; stroke:url(#traceGrad); stroke-width:1.4;
+    stroke-dasharray:6 420; stroke-dashoffset:0;
+    animation:traceRun 5.5s linear infinite;
+  }
+  @keyframes traceRun{ to{ stroke-dashoffset:-426; } }
+
+  .field-label{
+    font-family:var(--font-mono); font-size:.7rem; letter-spacing:.06em;
+    color:var(--text-faint); text-transform:uppercase;
+  }
+
+  input#roomTitle, input#roomCode{
+    background:var(--surface-2);
+    border:1px solid var(--border);
+    color:var(--text);
+    font-family:var(--font-mono);
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  input#roomTitle::placeholder, input#roomCode::placeholder{ color:var(--text-faint); font-family:var(--font-body); }
+  input#roomTitle:focus, input#roomCode:focus{
+    outline:none; border-color:var(--signal);
+    box-shadow:0 0 0 3px var(--signal-soft);
+  }
+
+  /* action cards: subtle animated gradient top-bar reveals on hover */
+  .action-card{ position:relative; overflow:hidden; transition:border-color .25s ease, transform .25s ease, box-shadow .25s ease; }
+  .action-card::before{
+    content:""; position:absolute; top:0; left:0; right:0; height:2px;
+    background:var(--duo); background-size:220% 220%;
+    transform:scaleX(0); transform-origin:left; transition:transform .35s ease;
+  }
+  .action-card:hover::before{ transform:scaleX(1); animation:gradShift 6s ease infinite; }
+  .action-card:hover{ border-color:var(--border-soft); transform:translateY(-3px); box-shadow:0 22px 44px -26px rgba(79,216,196,.28); }
+
+  .icon-chip{
+    width:36px; height:36px; border-radius:9px;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+    transition:transform .3s ease;
+  }
+  .action-card:hover .icon-chip{ transform:scale(1.08) rotate(-4deg); }
+
+  #createRoomBtn{
+    background:var(--duo); background-size:220% 220%;
+    color:#07130f;
+    font-family:var(--font-display); font-weight:700;
+    display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+    transition:background-position .5s ease, transform .15s ease, box-shadow .18s ease;
+    border:none;
+  }
+  #createRoomBtn:hover{ background-position:100% 50%; transform:translateY(-1px); box-shadow:0 16px 32px -16px rgba(79,216,196,.5); }
+  #createRoomBtn:active{ transform:translateY(0) scale(.99); }
+  #createRoomBtn:focus-visible{ outline:2px solid var(--signal); outline-offset:2px; }
+
+  #joinRoomBtn{
+    background:transparent;
+    color:var(--text);
+    border:1px solid var(--border);
+    font-family:var(--font-display); font-weight:700;
+    display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+    transition:all .18s ease;
+  }
+  #joinRoomBtn:hover{ border-color:var(--pulse); color:var(--pulse); transform:translateY(-1px); }
+  #joinRoomBtn:active{ transform:translateY(0) scale(.99); }
+  #joinRoomBtn:focus-visible{ outline:2px solid var(--pulse); outline-offset:2px; }
+
+  #roomsContainer{ color:var(--text-muted); font-family:var(--font-mono); font-size:.85rem; }
+  #roomsContainer .empty-loading{
+    display:flex; align-items:center; gap:.6rem; padding:.5rem 0;
+  }
+  #roomsContainer .empty-loading .spin{
+    width:14px; height:14px; border-radius:999px;
+    border:2px solid var(--border); border-top-color:var(--signal);
+    animation:spin .8s linear infinite;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  .section-head{ display:flex; align-items:center; gap:.55rem; }
+  .section-head .icon{ color:var(--text-muted); }
+
+  ::selection{ background:var(--signal-soft); color:var(--signal); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+  }
+  
+
+/* ===========================================
+   MY ROOMS PANEL
+=========================================== */
+
+.panel{
+
+    background:#111827;
+
+    border:1px solid rgba(255,255,255,.06);
+
+    border-radius:18px;
+
+    box-shadow:0 10px 35px rgba(0,0,0,.35);
+
+}
+
+
+/* ===========================================
+   SECTION HEADER
+=========================================== */
+
+.section-head{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+.section-head .icon{
+
+    width:28px;
+
+    height:28px;
+
+    stroke:#60a5fa;
+
+    stroke-width:2;
+
+    fill:none;
+
+}
+
+.section-head h2{
+
+    color:#fff;
+
+    font-size:32px;
+
+    font-weight:700;
+
+}
+
+
+/* ===========================================
+   ROOMS CONTAINER
+=========================================== */
+
+#roomsContainer{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+
+/* ===========================================
+   ROOM CARD
+=========================================== */
+
+.room-card{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:#1e293b;
+
+    padding:22px 24px;
+
+    border-radius:16px;
+
+    border:1px solid rgba(255,255,255,.05);
+
+    transition:.3s;
+
+}
+
+.room-card:hover{
+
+    transform:translateY(-3px);
+
+    border-color:#3b82f6;
+
+    box-shadow:0 10px 25px rgba(59,130,246,.18);
+
+}
+
+
+/* ===========================================
+   ROOM INFO
+=========================================== */
+
+.room-info{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:6px;
+
+}
+
+.room-title{
+
+    color:white;
+
+    font-size:22px;
+
+    font-weight:700;
+
+}
+
+.room-code{
+
+    color:#94a3b8;
+
+    font-size:15px;
+
+    letter-spacing:1px;
+
+}
+
+
+/* ===========================================
+   BUTTON AREA
+=========================================== */
+
+.room-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+
+/* ===========================================
+   JOIN BUTTON
+=========================================== */
+
+.join-btn{
+
+    width:120px;
+
+    height:46px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#2563eb;
+
+    color:#fff;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.join-btn:hover{
+
+    background:#1d4ed8;
+
+    transform:translateY(-2px);
+
+}
+
+
+/* ===========================================
+   DELETE BUTTON
+=========================================== */
+
+.delete-btn{
+
+    width:46px;
+
+    height:46px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#ef4444;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+    transition:.25s;
+
+}
+
+.delete-btn:hover{
+
+    background:#dc2626;
+
+    transform:scale(1.05);
+
+}
+
+
+/* ===========================================
+   LOADING
+=========================================== */
+
+.empty-loading{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:12px;
+
+    color:#94a3b8;
+
+    font-size:18px;
+
+    padding:40px;
+
+}
+
+.spin{
+
+    width:18px;
+
+    height:18px;
+
+    border:3px solid rgba(255,255,255,.2);
+
+    border-top:3px solid #3b82f6;
+
+    border-radius:50%;
+
+    animation:spin 1s linear infinite;
+
+}
+
+@keyframes spin{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+
+/* ===========================================
+   RESPONSIVE
+=========================================== */
+
+@media(max-width:768px){
+
+    .room-card{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:18px;
+
+    }
+
+    .room-actions{
+
+        width:100%;
+
+        justify-content:flex-end;
+
+    }
+
+    .join-btn{
+
+        width:100px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="bg-grid"></div>
+<div class="aurora-wash"></div>
+<span class="circuit-node" style="top:12%; left:18%;"></span>
+<span class="circuit-node n2" style="top:28%; left:82%;"></span>
+<span class="circuit-node n3" style="top:52%; left:8%;"></span>
+<span class="circuit-node n4" style="top:66%; left:92%;"></span>
+<span class="circuit-node n5" style="top:85%; left:40%;"></span>
+
+<div class="page-shell">
+
+    <!-- Navbar -->
+    <nav class="topnav sticky top-0 z-40">
+
+        <div class="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
+
+            <h1 class="brand-mark">
+                <span class="logomark">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M9 6L3 12l6 6"/><path d="M15 6l6 6-6 6"/></svg>
+                </span>
+                <span class="font-display font-bold text-xl" style="letter-spacing:-.01em;">CodeCollab <span class="grad-text">AI</span></span>
+            </h1>
+
+            <div class="flex items-center gap-4">
+
+                <img
+                    id="profilePic"
+                    class="w-10 h-10 rounded-full border object-cover"
+                    src="https://via.placeholder.com/40"
+                >
+
+                <span
+                    id="userName"
+                    class="font-semibold hidden sm:inline">
+                    Loading...
+                </span>
+
+                <button
+                    id="logoutBtn"
+                    class="px-4 py-2 rounded-lg">
+
+                    <svg class="icon" style="width:15px;height:15px;" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+                    <span class="hidden sm:inline">Logout</span>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+    <!-- Main -->
+    <div class="max-w-7xl mx-auto mt-10 px-6 pb-16">
+
+        <!-- Welcome Card -->
+        <div class="hero-panel reveal rounded-xl p-8 md:p-10" style="animation-delay:.05s;">
+
+            <h2
+                id="welcome"
+                class="text-3xl md:text-4xl font-bold">
+
+                Welcome!
+
+            </h2>
+
+            <p class="mt-3" style="color:var(--text-muted);">
+
+                Ready to collaborate today?
+
+            </p>
+
+            <svg class="pulse-trace" viewBox="0 0 700 46" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="traceGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#4fd8c4" stop-opacity="0"/>
+                  <stop offset="50%" stop-color="#4fd8c4" stop-opacity=".9"/>
+                  <stop offset="100%" stop-color="#e8a262" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path d="M0 34 L120 34 L140 12 L160 34 L720 34"/>
+            </svg>
+
+        </div>
+
+        <!-- Cards -->
+        <div class="grid md:grid-cols-2 gap-6 mt-8">
+
+            <!-- Create Room -->
+
+            <div class="panel action-card reveal p-8" style="animation-delay:.15s;">
+
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="icon-chip" style="background:var(--signal-soft); color:var(--signal);">
+                        <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                    </span>
+                    <div>
+                        <h3 class="font-display text-xl font-bold">Create a room</h3>
+                        <p class="text-xs mt-0.5" style="color:var(--text-faint);">Start a fresh session and invite your pair</p>
+                    </div>
+                </div>
+
+                <label class="field-label" for="roomTitle">Room title</label>
+                <input
+                    id="roomTitle"
+                    type="text"
+                    placeholder="e.g. auth-refactor"
+                    class="w-full p-3 rounded-lg mt-2">
+
+                <button
+                    id="createRoomBtn"
+                    class="mt-5 w-full p-3 rounded-lg">
+
+                    <svg class="icon" style="width:16px;height:16px;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                    Create Room
+
+                </button>
+
+            </div>
+
+            <!-- Join Room -->
+
+            <div class="panel action-card reveal p-8" style="animation-delay:.25s;">
+
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="icon-chip" style="background:var(--pulse-soft); color:var(--pulse);">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M9 15l6-6"/><path d="M8 12l-2.5 2.5a3.5 3.5 0 0 0 5 5L13 17"/><path d="M16 12l2.5-2.5a3.5 3.5 0 0 0-5-5L11 7"/></svg>
+                    </span>
+                    <div>
+                        <h3 class="font-display text-xl font-bold">Join a room</h3>
+                        <p class="text-xs mt-0.5" style="color:var(--text-faint);">Drop in with a code someone shared</p>
+                    </div>
+                </div>
+
+                <label class="field-label" for="roomCode">Room code</label>
+                <input
+                    id="roomCode"
+                    type="text"
+                    placeholder="e.g. 7F3-K9Q"
+                    class="w-full p-3 rounded-lg mt-2">
+
+                <button
+                    id="joinRoomBtn"
+                    class="mt-5 w-full p-3 rounded-lg">
+
+                    <svg class="icon" style="width:16px;height:16px;" viewBox="0 0 24 24"><path d="M9 15l6-6"/><path d="M8 12l-2.5 2.5a3.5 3.5 0 0 0 5 5L13 17"/><path d="M16 12l2.5-2.5a3.5 3.5 0 0 0-5-5L11 7"/></svg>
+                    Join Room
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- My Rooms -->
+
+        <div class="panel reveal p-8 mt-8" style="animation-delay:.35s;">
+
+            <div class="section-head mb-6">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M4 5c2-1 5-1 7 0v14c-2-1-5-1-7 0z"/><path d="M20 5c-2-1-5-1-7 0v14c2-1 5-1 7 0z"/></svg>
+                <h2 class="font-display text-2xl font-bold">My Rooms</h2>
+            </div>
+
+            <div id="roomsContainer">
+
+                <div class="empty-loading">
+                    <span class="spin"></span>
+                    Loading...
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+    <script src="/static/js/config.js"></script>
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/dashboard.js"></script>
+
+</body>
+
+</html>

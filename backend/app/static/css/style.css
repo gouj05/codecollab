@@ -1,0 +1,164 @@
+body{
+    margin:0;
+    padding:0;
+    background:#0f172a;
+    color:white;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+::-webkit-scrollbar{
+    width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#475569;
+}
+
+::-webkit-scrollbar-track{
+    background:#1e293b;
+}
+/* ===========================
+   ROOM CARD
+=========================== */
+
+.room-card{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:#111827;
+
+    padding:20px 24px;
+
+    border-radius:16px;
+
+    margin-bottom:18px;
+
+    border:1px solid rgba(255,255,255,.05);
+
+    transition:.25s;
+
+}
+
+.room-card:hover{
+
+    border-color:#2563eb;
+
+    transform:translateY(-2px);
+
+}
+
+
+/* ===========================
+   LEFT SIDE
+=========================== */
+
+.room-info{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:6px;
+
+}
+
+.room-title{
+
+    font-size:24px;
+
+    font-weight:700;
+
+    color:white;
+
+}
+
+.room-code{
+
+    font-size:15px;
+
+    color:#94a3b8;
+
+}
+
+
+/* ===========================
+   BUTTONS
+=========================== */
+
+.room-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+
+/* JOIN BUTTON */
+
+.join-btn{
+
+    width:120px;
+
+    height:46px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.join-btn:hover{
+
+    background:#1d4ed8;
+
+}
+
+
+/* DELETE */
+
+.delete-btn{
+
+    width:46px;
+
+    height:46px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#ef4444;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+    transition:.25s;
+
+}
+
+.delete-btn:hover{
+
+    background:#dc2626;
+
+}
